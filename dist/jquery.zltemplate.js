@@ -44,52 +44,50 @@ String.prototype.replaceAll = function (reallyDo, replaceWith, ignoreCase) {
             result = $this.html();
             options.rule = options.rule || /#{(.(?!#{))*[^\n\r\f\t\v\0]}/g;
             binds = result.match(options.rule);
-            if (binds) {
-                if (data instanceof Object && options.nested) {
-                    if (options.nested instanceof Array) {
-                        if (options.nested.length) {
-                            options.nested = $.map(options.nested, function (item) {
-                                if (!(item instanceof $)) {
-                                    return $(item);
-                                } else
-                                    return item;
-                            });
-                        }
-                    } else if (typeof(options.nested) === 'string') {
-                        if (options.nested.length) {
-                            options.nested = $.map(options.nested.split(','), function (item) {
-                                return $(item);
-                            });
-                        }
-                    } else if (options.nested instanceof $) {
-                        options.nested = options.nested.map(function () {
-                            return $(this);
-                        });
-                    } else {
-                        options.nested = [];
-                    }
+            if (data instanceof Object && options.nested !== undefined) {
+                if (options.nested instanceof Array) {
                     if (options.nested.length) {
-                        $.each(options.nested, function (i, item) {
-                            nestedCol = item.data('nested');
-                            nested[item.data('alias') || nestedCol] = item.template(data[nestedCol], options);
+                        options.nested = $.map(options.nested, function (item) {
+                            if (!(item instanceof $)) {
+                                return $(item);
+                            } else
+                                return item;
                         });
                     }
+                } else if (typeof(options.nested) === 'string') {
+                    if (options.nested.length) {
+                        options.nested = $.map(options.nested.split(','), function (item) {
+                            return $(item);
+                        });
+                    }
+                } else if (options.nested instanceof $) {
+                    options.nested = options.nested.map(function () {
+                        return $(this);
+                    });
+                } else {
+                    options.nested = [];
                 }
-                $.each(binds, function (i, item) {
-                    val = item.substring(2);
-                    val = 'val=' + val.substring(0, val.length - 1).replaceAll('&amp;', '&').replaceAll('&gt;', '>').replaceAll('&lt;', '<');
-                    try {
-                        eval(val);
-                    } catch (err) {
-                        val = undefined;
-                    }
-                    if (val !== undefined) {
-                        result = result.replace(item, val);
-                    } else if (options.clean === undefined || options.clean) {
-                        result = result.replace(item, '');
-                    }
-                });
+                if (options.nested.length) {
+                    $.each(options.nested, function (i, item) {
+                        nestedCol = item.data('nested');
+                        nested[item.data('alias') || nestedCol] = item.template(data[nestedCol], options);
+                    });
+                }
             }
+            $.each(binds, function (i, item) {
+                val = item.substring(2);
+                val = 'val=' + val.substring(0, val.length - 1).replaceAll('&amp;', '&').replaceAll('&gt;', '>').replaceAll('&lt;', '<');
+                try {
+                    eval(val);
+                } catch (err) {
+                    val = undefined;
+                }
+                if (val !== undefined) {
+                    result = result.replace(item, val);
+                } else if (options.clean === undefined || options.clean) {
+                    result = result.replace(item, '');
+                }
+            });
         }
         return result;
     };
