@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="ZLTemplate是一款由LangZhai（智能小菜菜）开发的基于jQuery的轻量级模板引擎。">
+        <meta name="keywords" content="ZLTemplate,jQuery模板引擎,LangZhai,智能小菜菜,SmartCai">
+        <title>ZLTemplate by LangZhai(智能小菜菜)</title>
+        <style>
+            body > div {
+                float: left;
+            }
+
+            body > div div {
+                padding: 10px;
+                border: 1px solid black;
+                min-width: 100px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="target"></div>
+        <script id="template" type="text/html" data-nested="sub">
+            <div>#{nested.sub}</div>
+        </script>
+        <script src="resource/jquery-1.12.2.min.js"></script>
+        <script src="dist/jquery.zltemplate.min.js"></script>
+        <script>
+            $(function () {
+                $('#target').html($('#template').template([{sub: {sub: {sub: [{}, {}, {}]}}}, {}, {}], {nested: '#template'}));
+            });
+        </script>
+    </body>
+</html>
