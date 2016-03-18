@@ -70,8 +70,8 @@ String.prototype.replaceAll = function (reallyDo, replaceWith, ignoreCase) {
                     }
                     if (options.nested.length) {
                         $.each(options.nested, function (i, item) {
-                            nestedCol = item.attr('data-nested');
-                            nested[item.attr('data-alias') || nestedCol] = item.template(data[nestedCol], options);
+                            nestedCol = item.data('nested');
+                            nested[item.data('alias') || nestedCol] = item.template(data[nestedCol], options);
                         });
                     }
                 }
