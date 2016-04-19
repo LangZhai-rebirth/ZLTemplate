@@ -1,81 +1,54 @@
-﻿<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="description" content="ZLTemplate是一款由LangZhai（智能小菜菜）开发的基于jQuery的轻量级模板引擎。"><meta name="keywords" content="ZLTemplate,jQuery模板引擎,LangZhai,智能小菜菜,SmartCai"><meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no"><link rel="stylesheet" href="http://langzhai.github.io/lib/prism/prism.min.css"><link rel="stylesheet" href="http://langzhai.github.io/css/article.min.css"><!--[if lt IE 9]><script src="http://langzhai.github.io/lib/selectivizr-min.js"></script>
-<script src="http://langzhai.github.io/lib/html5.min.js"></script><![endif]--><title>ZLTemplate by LangZhai(智能小菜菜)</title></head><body><article><header><h1>ZLTemplate by LangZhai(智能小菜菜)</h1></header><section><h2>这是啥</h2><p>一款基于jQuery的轻量级模板引擎。</p></section><section><h2>能干啥</h2><p>填充模板，支持无限循环嵌套及灵活的传参方式。</p></section><section><h2>怎么用</h2><p>引入JS：</p><pre class="language-markup"><code>&lt;!DOCTYPE HTML&gt;
-&lt;html&gt;
-    &lt;head&gt;
-        &lt;title&gt;ZLTemplate by LangZhai(智能小菜菜)&lt;/title&gt;
-    &lt;/head&gt;
-    &lt;body&gt;
-        &lt;!--为了使页面加载更快，最好将JS放置在&lt;body&gt;的末尾--&gt;
-        &lt;script src="jquery.min.js"&gt;&lt;/script&gt;
-        &lt;script src="jquery.zltemplate.min.js"&gt;&lt;/script&gt;
-    &lt;/body&gt;
-&lt;/html&gt;</code></pre><p>定义模板：</p><pre class="language-markup"><code id="content">&lt;!--填充目标--&gt;
-&lt;div id="target" style="background:#272822;color:#f8f8f2;padding:1em;margin:.5em 0;overflow:auto;border-radius:.3em;"&gt;&lt;/div&gt;
-
-&lt;!--主模板--&gt;
-&lt;script type="text/html" id="template"&gt;
-    &lt;h1&gt;#{data.title}&lt;/h1&gt;
-    &lt;p&gt;#{data.desc}&lt;/p&gt;
-    #{data.item === undefined ? '' : '&lt;ul&gt;' + nested.item + '&lt;/ul&gt;'}
-    #{data.attr === undefined ? '' : nested.prop}
-&lt;/script&gt;
-
-&lt;!--嵌套模板--&gt;
-&lt;script type="text/html" id="template_item" data-nested="item"&gt;
-    &lt;li&gt;
-        &lt;p&gt;#{data.id}----#{data.name}&lt;/p&gt;
-        #{data.item === undefined ? '' : '&lt;ul&gt;' + nested.item + '&lt;/ul&gt;'}
-    &lt;/li&gt;
-&lt;/script&gt;
-
-&lt;!--嵌套模板2--&gt;
-&lt;script type="text/html" id="template_attr" data-nested="attr" data-alias="prop"&gt;
-    &lt;p&gt;#{data.key}:#{data.value}&lt;/p&gt;
-&lt;/script&gt;</code></pre><p>填充模板：</p><pre class="language-javascript"><code id="code">$(function(){
-    var data = {
-        title: '标题',
-        desc: '描述',
-        item: [
-            {
-                id: 1,
-                name: '我是子级'
-            },
-            {
-                id: 2,
-                name: '我是子级',
-                item: [
-                    {
-                        id: 21,
-                        name: '我是子级的子级'
-                    },
-                    {
-                        id: 22,
-                        name: '我是子级的子级'
-                    }
-                ]
-            },
-            {
-                id: 3,
-                name: '我是子级'
-            }
-        ],
-        attr: [
-            {
-                key: 'name',
-                value: '乔治'
-            },
-            {
-                key: 'sex',
-                value: '男'
-            }
-        ]
-    };
-    $('#target').html($('#template').template(data, {nested: '#template_item,#template_attr'}));
-});</code></pre><p id="point">填充效果：</p><p>参数定义：</p><pre class="language-javascript"><code>$('#template').template(data, {
-    //嵌套内容模板，支持传入jQuery对象(单个或数组)/jQuery选择器字符串(单个或数组)
-    nested: ['#template_item', '#template_attr', $('#template1'), $('#template2')]
-    //是否清除未填充节点
-    clean: true,
-    //正则查询规则
-    rule: /#{(.(?!#{))*[^\n\r\f\t\v\0]}/g
-});</code></pre></section><section><h2>在哪下</h2><p><a href="https://github.com/LangZhai/ZLTemplate" target="_blank">GitHub</a></p></section><footer><p>&copy; 2013-2016 <a href="http://langzhai.github.io">LangZhai(智能小菜菜)</a></p><p>本插件基于<a href="LICENSE">LGPL开源协议</a>开发，欢迎一切非商业/商业目的使用。</p></footer></article><script src="http://langzhai.github.io/lib/jquery-1.x.min.js"></script><script src="http://langzhai.github.io/lib/prism/prism.min.js"></script><script src="dist/jquery.zltemplate.min.js"></script><script>$(function(){$("#point").after($("#content").html().replaceAll("&lt;","<").replaceAll("&gt;",">")),eval($("#code").html())});</script></body></html>
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="ZLTemplate是一款由LangZhai（智能小菜菜）开发的基于jQuery的轻量级模板引擎。">
+        <meta name="keywords" content="ZLTemplate,jQuery模板引擎,LangZhai,智能小菜菜,SmartCai">
+        <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+        <link rel="stylesheet" href="http://langzhai.github.io/lib/prism/prism.min.css">
+        <link rel="stylesheet" href="http://langzhai.github.io/css/article.min.css">
+        <!--[if lt IE 9]>
+        <script src="http://langzhai.github.io/lib/selectivizr-min.js"></script>
+        <script src="http://langzhai.github.io/lib/html5.min.js"></script>
+        <![endif]-->
+        <title>ZLTemplate by LangZhai(智能小菜菜)</title>
+    </head>
+    <body>
+        <article></article>
+        <script type="text/html" id="template_article">
+            <header><h1>ZLTemplate by LangZhai(智能小菜菜)</h1></header>
+            <section>
+                <h2>这是啥</h2>
+                <p>一款基于jQuery的轻量级模板引擎。</p>
+            </section>
+            <section>
+                <h2>能干啥</h2>
+                <p>填充模板，支持无限循环嵌套及灵活的传参方式。</p>
+            </section>
+            <section>
+                <h2>怎么用</h2>
+                <p>引入JS：</p>
+                <pre class="language-markup"><code>#{data.escape(data.include)}</code></pre>
+                <p>定义模板：</p>
+                <pre class="language-markup"><code id="content">#{data.escape(data.template)}</code></pre>
+                <p>填充模板：</p>
+                <pre class="language-javascript"><code>#{data.code}</code></pre>
+                <p>填充效果：#{data.template}</p>
+                <p>参数定义：</p>
+                <pre class="language-javascript"><code>#{data.attr}</code></pre>
+            </section>
+            <section>
+                <h2>在哪下</h2>
+                <p><a href="https://github.com/LangZhai/ZLTemplate" target="_blank">GitHub</a></p>
+            </section>
+            <footer>
+                <p>&copy; 2013-2016 <a href="http://langzhai.github.io">LangZhai(智能小菜菜)</a></p>
+                <p>本插件基于<a href="LICENSE">LGPL开源协议</a>开发，欢迎一切非商业/商业目的使用。</p>
+            </footer>
+        </script>
+        <script src="http://langzhai.github.io/lib/jquery-1.x.min.js"></script>
+        <script src="http://langzhai.github.io/lib/prism/prism.min.js"></script>
+        <script src="dist/jquery.zltemplate.min.js"></script>
+        <script src="index.min.js"></script>
+    </body>
+</html>
