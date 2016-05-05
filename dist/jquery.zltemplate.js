@@ -1,10 +1,17 @@
 /**
- * ZLTemplate 1.0.0
- * Date: 2016-04-01
+ * ZLTemplate 1.0.1
+ * Date: 2016-05-05
  * © 2016 LangZhai(智能小菜菜)
  * This is licensed under the GNU LGPL, version 3 or later.
  * For details, see: http://www.gnu.org/licenses/lgpl.html
  * Project home: https://github.com/LangZhai/ZLTemplate
+ *
+ * ==========更新历史==========
+ * -2016-05-05    1.0.1-
+ *   1.【Add】添加index标识。
+ *
+ * -2016-04-01    1.0.0-
+ *   1.【Add】ZLTemplate诞生。
  */
 
 String.prototype.replaceAll = function (reallyDo, replaceWith, ignoreCase) {
@@ -33,13 +40,15 @@ String.prototype.replaceAll = function (reallyDo, replaceWith, ignoreCase) {
             binds,
             val,
             result,
+            index,
             nestedCol,
             nested = {};
         options = options || {};
+        index = options.index || 0;
         if (data instanceof Array) {
             result = '';
             $.each(data, function (i, item) {
-                result += $this.template(item, options);
+                result += $this.template(item, $.extend({}, options, {index: i}));
             });
         } else {
             result = $this.html();
@@ -77,9 +86,8 @@ String.prototype.replaceAll = function (reallyDo, replaceWith, ignoreCase) {
             }
             $.each(binds, function (i, item) {
                 val = item.substring(2);
-                val = 'val=' + val.substring(0, val.length - 1).replaceAll('&amp;', '&').replaceAll('&gt;', '>').replaceAll('&lt;', '<');
                 try {
-                    eval(val);
+                    val = eval(val.substring(0, val.length - 1).replaceAll('&amp;', '&').replaceAll('&gt;', '>').replaceAll('&lt;', '<'));
                 } catch (err) {
                     val = undefined;
                 }
