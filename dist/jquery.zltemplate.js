@@ -1,12 +1,15 @@
 /**
- * ZLTemplate 1.0.1
- * Date: 2016-05-05
+ * ZLTemplate 1.0.2
+ * Date: 2016-07-14
  * © 2016 LangZhai(智能小菜菜)
  * This is licensed under the GNU LGPL, version 3 or later.
  * For details, see: http://www.gnu.org/licenses/lgpl.html
  * Project home: https://github.com/LangZhai/ZLTemplate
  *
  * ==========更新历史==========
+ * -2016-07-14    1.0.2-
+ *   1.【Add】添加last标识。
+ *
  * -2016-05-05    1.0.1-
  *   1.【Add】添加index标识。
  *
@@ -41,14 +44,16 @@ String.prototype.replaceAll = function (reallyDo, replaceWith, ignoreCase) {
             val,
             result,
             index,
+            last,
             nestedCol,
             nested = {};
         options = options || {};
         index = options.index || 0;
+        last = options.last === undefined || options.last;
         if (data instanceof Array) {
             result = '';
             $.each(data, function (i, item) {
-                result += $this.template(item, $.extend({}, options, {index: i}));
+                result += $this.template(item, $.extend({}, options, {index: i, last: i === data.length - 1}));
             });
         } else {
             result = $this.html();
