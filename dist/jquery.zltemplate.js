@@ -1,12 +1,16 @@
 /**
- * ZLTemplate 1.0.2
- * Date: 2016-07-14
+ * ZLTemplate 1.0.4
+ * Date: 2016-09-06
  * © 2016 LangZhai(智能小菜菜)
  * This is licensed under the GNU LGPL, version 3 or later.
  * For details, see: http://www.gnu.org/licenses/lgpl.html
  * Project home: https://github.com/LangZhai/ZLTemplate
  *
  * ==========更新历史==========
+ * -2016-09-06    1.0.4-
+ *   1.【Update】data-nested支持多级对象属性；
+ *   2.【Debug】防止JS注入。
+ *
  * -2016-07-14    1.0.2-
  *   1.【Add】添加last标识。
  *
@@ -17,16 +21,18 @@
  *   1.【Add】ZLTemplate诞生。
  */
 
-String.prototype.replaceAll = function (reallyDo, replaceWith, ignoreCase) {
-    if (!RegExp.prototype.isPrototypeOf(reallyDo)) {
-        return this.replace(new RegExp(reallyDo, (ignoreCase ? 'gi' : 'g')), replaceWith);
-    } else {
-        return this.replace(reallyDo, replaceWith);
+Object.encodeEntity = function (obj) {
+    if (obj instanceof Object) {
+        $.each(Object.keys(obj), function (i, item) {
+            obj[item] = Object.encodeEntity(obj[item]);
+        });
+    } else if (typeof obj === 'string') {
+        obj = obj.replaceAll('&', '&amp;').replaceAll('>', '&gt;').replaceAll('<', '&lt;').replaceAll('"', '&quot;').replaceAll('\'', '&#x27;');
     }
+    return obj;
 };
 
-Object.prototype.getVal = function (key) {
-    var obj = this;
+Object.getVal = function (obj, key) {
     $.each(key.split('.'), function (i, item) {
         obj = obj[item];
         if (obj === undefined) {
@@ -36,19 +42,12 @@ Object.prototype.getVal = function (key) {
     return obj;
 };
 
-Object.prototype.setVal = function (key, val) {
-    var obj = this;
-    key = key.split('.');
-    $.each(key, function (i, item) {
-        if (i === key.length - 1) {
-            obj[item] = typeof val === 'function' ? val(obj[item]) : val;
-            return;
-        }
-        if (obj[item] === undefined) {
-            obj[item] = {};
-        }
-        obj = obj[item];
-    });
+String.prototype.replaceAll = function (reallyDo, replaceWith, ignoreCase) {
+    if (!RegExp.prototype.isPrototypeOf(reallyDo)) {
+        return this.replace(new RegExp(reallyDo, (ignoreCase ? 'gi' : 'g')), replaceWith);
+    } else {
+        return this.replace(reallyDo, replaceWith);
+    }
 };
 
 (function ($) {
@@ -85,6 +84,7 @@ Object.prototype.setVal = function (key, val) {
             result = $this.html();
             options.rule = options.rule || /#{(.(?!#{))*[^\n\r\f\t\v\0]}/g;
             binds = result.match(options.rule);
+            data = Object.encodeEntity(data);
             if (data instanceof Object && options.nested !== undefined) {
                 if (options.nested instanceof Array) {
                     options.nested = $.map(options.nested, function (item) {
@@ -106,7 +106,7 @@ Object.prototype.setVal = function (key, val) {
                 }
                 $.each(options.nested, function (i, $item) {
                     nestedCol = $item.data('nested');
-                    nested[$item.data('alias') || nestedCol] = $item.template(data.getVal(nestedCol), options);
+                    nested[$item.data('alias') || nestedCol] = $item.template(Object.getVal(data, nestedCol), options);
                 });
             }
             $.each(binds, function (i, item) {
