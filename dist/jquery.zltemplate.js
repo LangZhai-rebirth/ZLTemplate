@@ -25,6 +25,32 @@ String.prototype.replaceAll = function (reallyDo, replaceWith, ignoreCase) {
     }
 };
 
+Object.prototype.getVal = function (key) {
+    var obj = this;
+    $.each(key.split('.'), function (i, item) {
+        obj = obj[item];
+        if (obj === undefined) {
+            return false;
+        }
+    });
+    return obj;
+};
+
+Object.prototype.setVal = function (key, val) {
+    var obj = this;
+    key = key.split('.');
+    $.each(key, function (i, item) {
+        if (i === key.length - 1) {
+            obj[item] = typeof val === 'function' ? val(obj[item]) : val;
+            return;
+        }
+        if (obj[item] === undefined) {
+            obj[item] = {};
+        }
+        obj = obj[item];
+    });
+};
+
 (function ($) {
     /**
      * 填充内容模板
@@ -61,20 +87,16 @@ String.prototype.replaceAll = function (reallyDo, replaceWith, ignoreCase) {
             binds = result.match(options.rule);
             if (data instanceof Object && options.nested !== undefined) {
                 if (options.nested instanceof Array) {
-                    if (options.nested.length) {
-                        options.nested = $.map(options.nested, function (item) {
-                            if (!(item instanceof $)) {
-                                return $(item);
-                            } else
-                                return item;
-                        });
-                    }
-                } else if (typeof(options.nested) === 'string') {
-                    if (options.nested.length) {
-                        options.nested = $.map(options.nested.split(','), function (item) {
+                    options.nested = $.map(options.nested, function (item) {
+                        if (!(item instanceof $)) {
                             return $(item);
-                        });
-                    }
+                        } else
+                            return item;
+                    });
+                } else if (typeof options.nested === 'string') {
+                    options.nested = options.nested.length ? $.map(options.nested.split(','), function (item) {
+                        return $(item);
+                    }) : [];
                 } else if (options.nested instanceof $) {
                     options.nested = options.nested.map(function () {
                         return $(this);
@@ -82,12 +104,10 @@ String.prototype.replaceAll = function (reallyDo, replaceWith, ignoreCase) {
                 } else {
                     options.nested = [];
                 }
-                if (options.nested.length) {
-                    $.each(options.nested, function (i, item) {
-                        nestedCol = item.data('nested');
-                        nested[item.data('alias') || nestedCol] = item.template(data[nestedCol], options);
-                    });
-                }
+                $.each(options.nested, function (i, $item) {
+                    nestedCol = $item.data('nested');
+                    nested[$item.data('alias') || nestedCol] = $item.template(data.getVal(nestedCol), options);
+                });
             }
             $.each(binds, function (i, item) {
                 val = item.substring(2);
