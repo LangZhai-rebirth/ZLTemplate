@@ -29,12 +29,13 @@
             <section>
                 <h2>怎么用</h2>
                 <p>引入JS：</p>
-                <pre class="language-markup"><code>#{data.escape(data.include)}</code></pre>
+                <pre class="language-markup"><code>#{data.include}</code></pre>
                 <p>定义模板：</p>
-                <pre class="language-markup"><code>#{data.escape(data.template)}</code></pre>
+                <pre class="language-markup"><code>#{data.template}</code></pre>
                 <p>填充模板：</p>
                 <pre class="language-javascript"><code>#{data.code}</code></pre>
-                <p>填充效果：#{data.template}</p>
+                <p>填充效果：</p>
+                #{Object.decodeEntity(data.template)}
                 <p>参数定义：</p>
                 <pre class="language-javascript"><code>#{data.attr}</code></pre>
             </section>
