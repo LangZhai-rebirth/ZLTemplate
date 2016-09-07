@@ -40,6 +40,15 @@
                 <pre class="language-javascript"><code>#{data.attr}</code></pre>
             </section>
             <section>
+                <h2>防注入</h2>
+                <p>定义模板：</p>
+                <pre class="language-markup"><code>#{data.injection}</code></pre>
+                <p>填充模板：</p>
+                <pre class="language-javascript"><code>#{data.code[1]}</code></pre>
+                <p>填充效果：</p>
+                #{Object.decodeEntity(data.injection)}
+            </section>
+            <section>
                 <h2>在哪下</h2>
                 <p><a href="https://github.com/LangZhai/ZLTemplate" target="_blank">GitHub</a></p>
             </section>

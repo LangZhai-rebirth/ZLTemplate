@@ -7,7 +7,7 @@
  * Project home: https://github.com/LangZhai/ZLTemplate
  *
  * ==========更新历史==========
- * -2016-09-06    1.0.4-
+ * -2016-09-07    1.0.4-
  *   1.【Update】data-nested支持多级对象属性；
  *   2.【Debug】防止JS注入。
  *
