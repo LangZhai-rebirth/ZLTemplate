@@ -1,12 +1,15 @@
 /**
- * ZLTemplate 1.0.4
- * Date: 2016-09-07
- * © 2016 LangZhai(智能小菜菜)
+ * ZLTemplate 1.0.5
+ * Date: 2017-02-13
+ * © 2016-2017 LangZhai(智能小菜菜)
  * This is licensed under the GNU LGPL, version 3 or later.
  * For details, see: http://www.gnu.org/licenses/lgpl.html
  * Project home: https://github.com/LangZhai/ZLTemplate
  *
  * ==========更新历史==========
+ * -2017-02-13    1.0.5-
+ *   1.【Debug】修复字符实体编码BUG。
+ *
  * -2016-09-07    1.0.4-
  *   1.【Update】data-nested支持多级对象属性；
  *   2.【Debug】防止JS注入。
@@ -28,7 +31,7 @@ Object.encodeEntity = function (obj) {
             obj[i] = Object.encodeEntity(item);
         });
     } else if (typeof obj === 'string') {
-        obj = obj.replaceAll('&', '&amp;').replaceAll('>', '&gt;').replaceAll('<', '&lt;').replaceAll('"', '&quot;').replaceAll('\'', '&#x27;');
+        obj = obj.replaceAll(/&(?!(\S(?!&))+;)/, '&amp;').replaceAll('>', '&gt;').replaceAll('<', '&lt;').replaceAll('"', '&quot;').replaceAll('\'', '&#39;');
     }
     return obj;
 };
@@ -40,7 +43,7 @@ Object.decodeEntity = function (obj) {
             obj[i] = Object.decodeEntity(item);
         });
     } else if (typeof obj === 'string') {
-        obj = obj.replaceAll('&amp;', '&').replaceAll('&gt;', '>').replaceAll('&lt;', '<').replaceAll('&quot;', '"').replaceAll('&#x27;', '\'');
+        obj = obj.replaceAll('&amp;', '&').replaceAll('&gt;', '>').replaceAll('&lt;', '<').replaceAll('&quot;', '"').replaceAll('&#39;', '\'');
     }
     return obj;
 };
@@ -125,7 +128,7 @@ String.prototype.replaceAll = function (reallyDo, replaceWith, ignoreCase) {
             $.each(binds, function (i, item) {
                 val = item.substring(2);
                 try {
-                    val = eval(val.substring(0, val.length - 1).replaceAll('&amp;', '&').replaceAll('&gt;', '>').replaceAll('&lt;', '<'));
+                    val = eval(Object.decodeEntity(val.substring(0, val.length - 1)));
                 } catch (err) {
                     val = undefined;
                 }
