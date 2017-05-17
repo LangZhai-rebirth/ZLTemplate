@@ -2,16 +2,12 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <meta name="description" content="ZLTemplate是一款由LangZhai（智能小菜菜）开发的基于jQuery的轻量级模板引擎。">
-        <meta name="keywords" content="ZLTemplate,jQuery模板引擎,LangZhai,智能小菜菜,SmartCai">
+        <meta name="description" content="ZLTemplate是一款由LangZhai（智能小菜菜）开发的轻量级JavaScript模板引擎。">
+        <meta name="keywords" content="ZLTemplate,JavaScript模板引擎,LangZhai,智能小菜菜,SmartCai">
         <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
         <link rel="shortcut icon" type="image/x-icon" href="https://langzhai.github.io/favicon.ico">
         <link rel="stylesheet" href="https://langzhai.github.io/lib/prism/prism.min.css">
         <link rel="stylesheet" href="https://langzhai.github.io/css/article.min.css">
-        <!--[if lt IE 9]>
-        <script src="https://langzhai.github.io/lib/selectivizr-min.js"></script>
-        <script src="https://langzhai.github.io/lib/html5.min.js"></script>
-        <![endif]-->
         <script>
             var remoteUrl = 'https://langzhai.github.io/ZLTemplate/';
             if (location.protocol === 'http:') {
@@ -26,7 +22,7 @@
             <header><h1>ZLTemplate by LangZhai(智能小菜菜)</h1></header>
             <section>
                 <h2>这是啥</h2>
-                <p>一款基于jQuery的轻量级模板引擎。</p>
+                <p>一款轻量级JavaScript模板引擎。</p>
             </section>
             <section>
                 <h2>能干啥</h2>
@@ -55,6 +51,10 @@
                 #{Object.decodeEntity(data.injection)}
             </section>
             <section>
+                <h2>依赖库</h2>
+                <p>从ZLTemplate 2.0.0开始不再依赖jQuery。</p>
+            </section>
+            <section>
                 <h2>在哪下</h2>
                 <p><a href="https://github.com/LangZhai/ZLTemplate" target="_blank">GitHub</a></p>
             </section>
@@ -63,9 +63,8 @@
                 <p>本插件基于<a href="LICENSE">LGPL开源协议</a>开发，欢迎一切非商业/商业目的使用。</p>
             </footer>
         </script>
-        <script src="https://langzhai.github.io/lib/jquery-1.x.min.js"></script>
         <script src="https://langzhai.github.io/lib/prism/prism.min.js"></script>
-        <script src="dist/jquery.zltemplate.min.js"></script>
+        <script src="dist/zltemplate.min.js"></script>
         <script src="https://langzhai.github.io/js/article.min.js"></script>
     </body>
 </html>
