@@ -93,7 +93,7 @@ String.prototype.replaceAll = function (reallyDo, replaceWith, ignoreCase) {
     }
 };
 
-(function (window) {
+(function () {
     var ZLTemplate = function (selector) {
         return new ZLTemplate.prototype.init(selector);
     };
@@ -189,4 +189,4 @@ String.prototype.replaceAll = function (reallyDo, replaceWith, ignoreCase) {
 
     ZLTemplate.prototype.init.prototype = ZLTemplate.prototype;
     window.ZLTemplate = ZLTemplate;
-}(window));
+}());
