@@ -166,8 +166,8 @@ String.prototype.replaceAll = function (reallyDo, replaceWith, ignoreCase) {
                     options.nested = [];
                 }
                 options.nested.forEach(function (item) {
-                    nestedCol = item[0].getAttribute('data-nested');
-                    nested[item[0].getAttribute('data-alias') || nestedCol] = item.template(Object.getVal(data, nestedCol), options);
+                    nestedCol = item[0].dataset.nested;
+                    nested[item[0].dataset.alias || nestedCol] = item.template(Object.getVal(data, nestedCol), options);
                 });
             }
             binds.forEach(function (item) {
