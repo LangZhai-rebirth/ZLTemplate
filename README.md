@@ -1,4 +1,4 @@
-# [ZLTemplate](https://github.com/LangZhai/ZLTemplate) [![GitHub](https://img.shields.io/github/license/langzhai/zltemplate)](http://www.gnu.org/licenses/lgpl.html)
+# [ZLTemplate](https://github.com/LangZhai/ZLTemplate) [![GitHub](https://img.shields.io/github/license/LangZhai/ZLTemplate)](https://github.com/LangZhai/ZLTemplate/blob/master/LICENSE)
 
 ## 这是啥
 
