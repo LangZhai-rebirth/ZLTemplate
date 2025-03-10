@@ -1,4 +1,4 @@
-# [ZLTemplate](https://github.com/LangZhai/ZLTemplate) [![GitHub](https://img.shields.io/github/license/LangZhai/ZLTemplate)](https://github.com/LangZhai/ZLTemplate/blob/master/LICENSE)
+# [ZLTemplate](https://github.com/LangZhai-rebirth/ZLTemplate) [![GitHub](https://img.shields.io/github/license/LangZhai-rebirth/ZLTemplate)](https://github.com/LangZhai-rebirth/ZLTemplate/blob/master/LICENSE)
 
 ## 这是啥
 
@@ -167,7 +167,7 @@ ZLTemplate('#template').template(data, {
 var data = {
     title: '防注入测试',
     codeA: 'alert(\'注入成功！\');',
-    codeB: '<script>location.href = \'https://langzhai.github.io/\';</script>',
+    codeB: '<script>location.href = \'https://langzhai-rebirth.github.io/\';</script>',
     codeC: '<script>$(\'body\').remove();</script>'
 };
 document.querySelector('#injection').innerHTML = ZLTemplate('#template_injection').template(data);
@@ -177,7 +177,7 @@ document.querySelector('#injection').innerHTML = ZLTemplate('#template_injection
 ```html
 <h1>防注入测试</h1>
 <p>alert('注入成功！');</p>
-<p>&lt;script&gt;location.href = 'https://langzhai.github.io/';&lt;/script&gt;</p>
+<p>&lt;script&gt;location.href = 'https://langzhai-rebirth.github.io/';&lt;/script&gt;</p>
 <p>&lt;script&gt;$('body').remove();&lt;/script&gt;</p>
 ```
 
